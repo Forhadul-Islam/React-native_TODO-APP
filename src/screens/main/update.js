@@ -6,12 +6,13 @@ import Button from "../../components/common/button";
 import { DB } from "../../util/firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 
-export default function Create({ navigation, user }) {
+export default function Create({ navigation, user, route }) {
   const [color, setColor] = useState("skyblue");
-  const [colorList] = useState(["purple", "blue", "skyblue", "pink"]);
+  const [colorList] = useState(["purple", "cyan", "skyblue", "pink"]);
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const item = route.params.item;
   const createTodo = async () => {
     setLoading(true);
     try {
@@ -31,11 +32,12 @@ export default function Create({ navigation, user }) {
 
   return (
     <View style={{ marginHorizontal: 20, marginVertical: 20 }}>
-      <Input placeholder="Title" onTextChange={(text) => setTitle(text)} />
+      <Input placeholder="Title" onTextChange={(text) => setTitle(text)} value={item.title} />
       <Input
         placeholder="Description"
         multiline={true}
         onTextChange={(text) => setDescription(text)}
+        value={item.description}
       />
       <Text style={{ fontSize: 16, marginVertical: 15 }}>
         Select your color
