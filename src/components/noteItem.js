@@ -1,7 +1,16 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { deleteDoc, doc } from 'firebase/firestore';
+import { DB } from '../util/firebaseConfig';
 
 export default function NoteItem({navigation, item}) {
+  const deleteNote = async(id) =>{
+    try {
+      await deleteDoc(doc(DB, "notes", id));
+    } catch (err) {
+      console.log(err.message);
+    }
+}
   return (
     <View style={[styles.item, {backgroundColor: item.color}]}>
         <View style={styles.item_content}>
@@ -18,7 +27,7 @@ export default function NoteItem({navigation, item}) {
           >
             <Text style={styles.button_text}>Update</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={()=>{deleteNote(item.id)}}>
             <Text style={styles.button_text}>Delete</Text>
           </TouchableOpacity>
         </View>
@@ -63,7 +72,7 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignItems: "center",
       borderRadius: 15,
-      borderColor: "red",
+      borderColor: "white",
       borderWidth: 2,
     },
     button_text: {

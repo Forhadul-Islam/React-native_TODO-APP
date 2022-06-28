@@ -41,13 +41,14 @@ export default function App() {
         setLoading(false);
       } else {
         setUser(null);
+        setLoading(false)
       }
     });
 
     return authSubscription;
   }, []);
 
-  if(!user){
+  if(loading){
     return <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}> 
       <ActivityIndicator color="blue" size="large" />
     </View>
